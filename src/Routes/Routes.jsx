@@ -6,6 +6,8 @@ import Home from '../Components/Home/Home';
 import AppliedJobs from '../Components/Applied/AppliedJobs';
 import Blogs from '../Components/Blogs/Blogs';
 import Signin from '../Components/SignIn/Signin';
+import JobDetails from '../Components/Home/AllJobs/Jobdetails/JobDetails';
+import SignUp from '../SignUp/SignUp';
 
 const Routes = () => {
     const router = createBrowserRouter([
@@ -20,6 +22,7 @@ const Routes = () => {
                 },
                 {
                     path:'/jobs',
+                    loader:()=>fetch('https://next-level-two-ashen.vercel.app/jobs'),
                     element:<AppliedJobs></AppliedJobs>
                 },
                 {
@@ -29,6 +32,15 @@ const Routes = () => {
                 {
                     path:'/signin',
                     element:<Signin></Signin>
+                },
+                {
+                    path:'/register',
+                    element:<SignUp></SignUp>
+                },
+                {
+                    path:'/job/:jobId',
+                    loader:({params})=>fetch(`https://next-level-two-ashen.vercel.app/jobs/${params.jobId}`),
+                    element:<JobDetails></JobDetails>
                 }
             ]
         }

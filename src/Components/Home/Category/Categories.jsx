@@ -12,7 +12,7 @@ const Categories = () => {
     return (
         <div>
             <div className="shadow-xl py-5 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...">
-                <h1 className='text-white text-3xl text-center font-bold'>All Categories</h1>
+                <h1 className='text-white text-3xl text-center font-bold uppercase'>All Categories</h1>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-10 mt-20'>
                 {
