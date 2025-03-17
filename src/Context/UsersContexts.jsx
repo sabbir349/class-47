@@ -1,6 +1,6 @@
 import React, { Children, createContext, useState } from 'react';
 import app from '../FireBase/firebase.config';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, GoogleAuthProvider, GithubAuthProvider, updateProfile, sendEmailVerification, sendPasswordResetEmail } from 'firebase/auth';
 
 
 
@@ -11,18 +11,46 @@ const githubProvider = new GithubAuthProvider();
 
 export const AuthContext = createContext()
 const UsersContexts = ({ children }) => {
-
+    const[loading,setLoading] = useState(true)
     const [user, setUser] = useState({})
     console.log(user)
     // create user
     const createUser = (email, password) => {
+        setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
+    }
+
+    // update user
+
+    const updateUser = (name) => {
+        updateProfile(auth.currentUser, {
+            displayName: name
+        }).then(() => {
+
+        })
+            .catch((error) => {
+
+            });
+    }
+
+
+    // verify user by using email
+
+    const verifyUser = () => {
+        return sendEmailVerification(auth.currentUser)
     }
 
     // login user
 
     const loginUser = (email, password) => {
+        setLoading(true)
         return signInWithEmailAndPassword(auth, email, password)
+    }
+
+    // forget password
+
+    const forgetPassword = (email) => {
+     return sendPasswordResetEmail(auth, email)
     }
 
     // login user with google
@@ -51,12 +79,12 @@ const UsersContexts = ({ children }) => {
     }
 
     const unSubscribe = onAuthStateChanged(auth, currentUser => {
+        setLoading(false)
         setUser(currentUser)
-        {
-            () => unSubscribe()
+        return () => {
+            unSubscribe()
         }
-
-    },[])
+    }, [])
 
     const authInfo = {
         createUser,
@@ -64,7 +92,11 @@ const UsersContexts = ({ children }) => {
         user,
         logOut,
         continueWithGoogle,
-        continueWithGithub
+        continueWithGithub,
+        updateUser,
+        verifyUser,
+        forgetPassword,
+        loading
     }
     return (
         <AuthContext.Provider value={authInfo}>

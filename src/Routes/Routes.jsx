@@ -8,6 +8,7 @@ import Blogs from '../Components/Blogs/Blogs';
 import Signin from '../Components/SignIn/Signin';
 import JobDetails from '../Components/Home/AllJobs/Jobdetails/JobDetails';
 import SignUp from '../SignUp/SignUp';
+import PrivateRoute from './Private Route/PrivateRoute';
 
 const Routes = () => {
     const router = createBrowserRouter([
@@ -23,11 +24,11 @@ const Routes = () => {
                 {
                     path:'/jobs',
                     loader:()=>fetch('https://next-level-two-ashen.vercel.app/jobs'),
-                    element:<AppliedJobs></AppliedJobs>
+                    element:<PrivateRoute><AppliedJobs></AppliedJobs></PrivateRoute>
                 },
                 {
                     path:'/blogs',
-                    element:<Blogs></Blogs>
+                    element:<PrivateRoute><Blogs></Blogs></PrivateRoute>
                 },
                 {
                     path:'/signin',

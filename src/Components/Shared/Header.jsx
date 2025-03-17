@@ -58,7 +58,7 @@ const Header = () => {
         </div>
         <div className="navbar-end">
           {
-            user?.uid ? <div className="dropdown dropdown-end">
+            user?.uid && user?.emailVerified ? <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
                   <img
@@ -72,7 +72,7 @@ const Header = () => {
                 <li>
                   <a className="justify-between">
                     {user?.displayName}
-                    <span className="badge">{user?.uid.slice(-4)}</span>
+                    <span className="badge">{user?.uid.slice(-10)}</span>
                   </a>
                 </li>
                 <li><a>{user?.email}</a></li>
