@@ -13,7 +13,7 @@ const Signin = () => {
 
   const navigate = useNavigate()
   const location = useLocation()
-  const form = location.state?.from?.pathname || '/'
+  const from = location.state?.from?.pathname || '/'
 
   const handleSignInUser = (e) => {
     e.preventDefault()
@@ -24,7 +24,7 @@ const Signin = () => {
       .then(result => {
         const loggedInUser = result.user
         form.reset()
-        navigate(form,{replace:true})
+        navigate(from,{replace:true})
         if (loggedInUser.uid) {
           alert('user login successfully done')
         }
